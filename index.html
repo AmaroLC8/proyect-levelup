@@ -36,6 +36,8 @@
     </nav>
   </header>
 
+  <main>
+
   <!-- Sección Hero / Banner Principal -->
   <section class="hero-section text-center py-5 border-bottom border-secondary" style="background: linear-gradient(180deg, #111111 0%, #000000 100%);">
     <div class="container my-4">
@@ -56,8 +58,19 @@
     </p>
   </section>
 
+  <!-- Video de presentación de la comunidad -->
+  <section class="container my-5">
+    <h2 class="text-center text-neon mb-4">Conoce la Comunidad Level-Up</h2>
+    <div class="ratio ratio-16x9 mx-auto border border-secondary rounded overflow-hidden" style="max-width: 800px;">
+      <iframe src="https://www.youtube.com/embed/aqz-KE-bpKQ"
+              title="Video de presentación de Level-Up Gamer"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen></iframe>
+    </div>
+  </section>
+
   <!-- Productos Destacados -->
-  <main class="container my-5">
+  <section class="container my-5">
     <h2 class="text-center text-neon mb-4">Productos Destacados</h2>
     <div class="row g-4">
       <!-- Tarjeta 1: PS5 -->
@@ -68,13 +81,26 @@
             <span class="badge bg-primary mb-2 text-start w-auto">Consolas</span>
             <h5 class="card-title text-neon">PlayStation 5</h5>
             <p class="card-text text-muted">Consola de última generación de Sony con tiempos de carga ultrarrápidos.</p>
-            <p class="fw-bold fs-5 mt-auto text-white">\$549.990 CLP</p>
+            <p class="fw-bold fs-5 mt-auto text-white">$549.990 CLP</p>
+            <a href="producto-detalle.html" class="btn btn-outline-light w-100 mb-2">Ver Detalle</a>
             <button class="btn btn-neon w-100" onclick="agregarAlCarrito('PlayStation 5', 549990)">Agregar al Carrito</button>
           </div>
         </article>
       </div>
 
-      
+      <!-- Tarjeta 2: Silla Gamer -->
+      <div class="col-12 col-md-6 col-lg-4">
+        <article class="card h-100 border-secondary" style="background-color: #111111;">
+          <img src="assets/img/silla.jpg" class="card-img-top img-fluid" alt="Silla Gamer Secretlab Titan" style="border-bottom: 2px solid #1E90FF;">
+          <div class="card-body d-flex flex-column text-white">
+            <span class="badge bg-primary mb-2 text-start w-auto">Sillas Gamers</span>
+            <h5 class="card-title text-neon">Silla Secretlab Titan</h5>
+            <p class="card-text text-muted">Soporte ergonómico y personalización ajustable para sesiones de juego prolongadas.</p>
+            <p class="fw-bold fs-5 mt-auto text-white">$349.990 CLP</p>
+            <button class="btn btn-neon w-100" onclick="agregarAlCarrito('Silla Secretlab Titan', 349990)">Agregar al Carrito</button>
+          </div>
+        </article>
+      </div>
 
       <!-- Tarjeta 3: Catan -->
       <div class="col-12 col-md-6 col-lg-4">
@@ -84,12 +110,14 @@
             <span class="badge bg-primary mb-2 text-start w-auto">Juegos de Mesa</span>
             <h5 class="card-title text-neon">Catan</h5>
             <p class="card-text text-muted">Clásico juego de estrategia para competir por colonizar la isla de Catan.</p>
-            <p class="fw-bold fs-5 mt-auto text-white">\$29.990 CLP</p>
+            <p class="fw-bold fs-5 mt-auto text-white">$29.990 CLP</p>
             <button class="btn btn-neon w-100" onclick="agregarAlCarrito('Juego Catan', 29990)">Agregar al Carrito</button>
           </div>
         </article>
       </div>
     </div>
+  </section>
+
   </main>
 
   <!-- Footer con Botón de WhatsApp -->
