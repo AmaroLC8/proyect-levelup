@@ -59,3 +59,10 @@ h1, h2, h3, .navbar-brand {
 .card-body .fw-bold{
     color: #ffffff
 }
+/* Arreglo de contraste para mensajes e información de ayuda sobre fondo oscuro */
+.text-muted, 
+small.text-muted, 
+.form-text, 
+small {
+  color: #D3D3D3 !important; /* Gris Claro visible y legible */
+}
