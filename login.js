@@ -68,16 +68,26 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      // Mensaje de éxito
-      Swal.fire({
-        icon: 'success',
-        title: '¡Sesión Iniciada!',
-        text: `Bienvenido de nuevo, ${email}`,
-        background: '#111', color: '#39FF14', confirmButtonColor: '#1E90FF'
-      }).then(() => {
-        // Redireccionar al inicio tras iniciar sesión
-        window.location.href = 'index.html';
-      });
+      // 6. Redirección según el Rol de Usuario (Administrador vs Cliente)
+      if (emailLower === 'admin@duoc.cl' || emailLower === 'admin@profesor.duoc.cl') {
+        Swal.fire({
+          icon: 'success',
+          title: '¡Sesión de Administrador!',
+          text: 'Bienvenido al sistema de gestión.',
+          background: '#111', color: '#39FF14', confirmButtonColor: '#1E90FF'
+        }).then(() => {
+          window.location.href = 'admin/index.html';
+        });
+      } else {
+        Swal.fire({
+          icon: 'success',
+          title: '¡Sesión Iniciada!',
+          text: `Bienvenido de nuevo, ${email}`,
+          background: '#111', color: '#39FF14', confirmButtonColor: '#1E90FF'
+        }).then(() => {
+          window.location.href = 'index.html';
+        });
+      }
     });
   }
 });
