@@ -1,84 +1,122 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro - Level-Up Gamer</title>
-    
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="assets/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Level-Up Gamer - Tienda Online</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Fuentes de Google: Orbitron y Roboto -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
 </head>
-<body class="bg-black text-white">
+<body class="bg-black text-white d-flex flex-column min-vh-100">
 
-    <header>
-        
-        <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #1E90FF;">
-            <div class="container">
-                <a class="navbar-brand text-white fw-bold" href="#" style="font-family: 'Orbitron', sans-serif;">LEVEL-UP GAMER</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link text-white" href="#">Inicio</a></li>
-                        <li class="nav-item"><a class="nav-link text-white" href="catalogo.html">Catálogo</a></li>
-                        <li class="nav-item"><a class="nav-link text-white fw-bold" href="index.html">Registro</a></li>
-                        <li class="nav-item"><a class="nav-link text-white" href="contacto.html">Contacto</a></li>
-                        <li class="nav-item"><a class="nav-link text-white" href="carrito.html">Carrito</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-
-    <main class="container my-5">
-        <section class="row justify-content-center">
-            <article class="col-md-8 col-lg-6 p-4 rounded border border-secondary form-container" style="background-color: #111;">
-                <h2 class="text-center text-neon mb-4">Únete a la Comunidad</h2>
-                
-                <form id="registroForm">
-                    <div class="mb-3">
-                        <label for="nombre" class="form-label">Nombre Completo:</label>
-                        <input type="text" class="form-control" id="nombre" autocomplete="name" placeholder="Tu nombre gamer">
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Correo Electrónico:</label>
-                        <input type="email" class="form-control" id="email" autocomplete="email" placeholder="ejemplo@duocuc.cl">
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label for="fechaNacimiento" class="form-label">Fecha de Nacimiento:</label>
-                        <input type="date" class="form-control" id="fechaNacimiento">
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="referido" class="form-label">Código de Referido (Opcional):</label>
-                        <input type="text" class="form-control" id="referido" placeholder="Ingresa código para Puntos LevelUp">
-                    </div>
-
-                    <div id="mensajeApp" class="mb-3 fw-bold"></div>
-
-                    <button type="submit" class="btn btn-neon w-100 py-2">Registrarme y Subir de Nivel</button>
-                </form>
-            </article>
-        </section>
-    </main>
-
-    
-    <footer class="text-center py-4 mt-auto" style="background-color: #000000; border-top: 1px solid #333;">
-        <div class="container">
-            <p class="mb-1">Equipo de Desarrollo Fullstack II - 2024</p>
-            <p class="text-muted small">Apoyando a la comunidad gamer nacional.</p>
-            <a href="https://wa.me/56912345678" target="_blank" class="btn btn-outline-success rounded-pill mt-2" style="border-color: #39FF14; color: #39FF14;">Chat de Soporte Técnico</a>
+  <!-- Encabezado y Menú de Navegación -->
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #1E90FF;">
+      <div class="container">
+        <a class="navbar-brand text-white fw-bold" href="index.html" style="font-family: 'Orbitron', sans-serif;">
+          LEVEL-UP <span style="color: #39FF14;">GAMER</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link text-white fw-bold" href="index.html">Inicio</a></li>
+            <li class="nav-item"><a class="nav-link text-white" href="catalogo.html">Catálogo</a></li>
+            <li class="nav-item"><a class="nav-link text-white" href="contacto.html">Contacto</a></li>
+            <li class="nav-item"><a class="nav-link text-white" href="registro.html">Registro</a></li>
+            <li class="nav-item"><a class="nav-link text-white" href="login.html">Iniciar Sesión</a></li>
+            <li class="nav-item"><a class="nav-link text-white" href="carrito.html">🛒 Carrito</a></li>
+          </ul>
         </div>
-    </footer>
+      </div>
+    </nav>
+  </header>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="app.js"></script>
+  <!-- Sección Hero / Banner Principal -->
+  <section class="hero-section text-center py-5 border-bottom border-secondary" style="background: linear-gradient(180deg, #111111 0%, #000000 100%);">
+    <div class="container my-4">
+      <h1 class="display-4 fw-extrabold text-neon mb-3">¡Desafía tus límites con Level-Up Gamer!</h1>
+      <p class="lead text-light col-md-8 mx-auto mb-4">
+        Conviértete en el héroe de tu propia historia. Encuentra consolas, accesorios, PC Gamers y juegos de mesa con despacho a todo Chile.
+      </p>
+      <a href="catalogo.html" class="btn btn-neon btn-lg px-4 py-2 me-2">Ver Catálogo Completo</a>
+      <a href="registro.html" class="btn btn-outline-light btn-lg px-4 py-2">Únete a la Comunidad</a>
+    </div>
+  </section>
+
+  <!-- Breve Presentación -->
+  <section class="container my-5 text-center">
+    <h2 class="text-neon mb-3">¿Por qué elegir Level-Up Gamer?</h2>
+    <p class="text-muted col-md-9 mx-auto">
+      Somos la tienda online líder en productos para gamers en Chile. Ofrecemos calidad garantizada, autenticidad de fabricantes y un exclusivo programa de fidelización con Puntos LevelUp.
+    </p>
+  </section>
+
+  <!-- Productos Destacados -->
+  <main class="container my-5">
+    <h2 class="text-center text-neon mb-4">Productos Destacados</h2>
+    <div class="row g-4">
+      <!-- Tarjeta 1: PS5 -->
+      <div class="col-12 col-md-6 col-lg-4">
+        <article class="card h-100 border-secondary" style="background-color: #111111;">
+          <img src="assets/img/ps5.jpg" class="card-img-top img-fluid" alt="PlayStation 5" style="border-bottom: 2px solid #1E90FF;">
+          <div class="card-body d-flex flex-column text-white">
+            <span class="badge bg-primary mb-2 text-start w-auto">Consolas</span>
+            <h5 class="card-title text-neon">PlayStation 5</h5>
+            <p class="card-text text-muted">Consola de última generación de Sony con tiempos de carga ultrarrápidos.</p>
+            <p class="fw-bold fs-5 mt-auto text-white">\$549.990 CLP</p>
+            <button class="btn btn-neon w-100" onclick="agregarAlCarrito('PlayStation 5', 549990)">Agregar al Carrito</button>
+          </div>
+        </article>
+      </div>
+
+      <!-- Tarjeta 2: PC Gamer -->
+      <div class="col-12 col-md-6 col-lg-4">
+        <article class="card h-100 border-secondary" style="background-color: #111111;">
+          <img src="assets/img/pc.jpg" class="card-img-top img-fluid" alt="PC Gamer ASUS ROG Strix" style="border-bottom: 2px solid #1E90FF;">
+          <div class="card-body d-flex flex-column text-white">
+            <span class="badge bg-primary mb-2 text-start w-auto">Computadores</span>
+            <h5 class="card-title text-neon">PC Gamer ASUS ROG Strix</h5>
+            <p class="card-text text-muted">Equipo de máximo rendimiento diseñado para los gamers más exigentes.</p>
+            <p class="fw-bold fs-5 mt-auto text-white">\$1.299.990 CLP</p>
+            <button class="btn btn-neon w-100" onclick="agregarAlCarrito('PC Gamer ASUS ROG Strix', 1299990)">Agregar al Carrito</button>
+          </div>
+        </article>
+      </div>
+
+      <!-- Tarjeta 3: Catan -->
+      <div class="col-12 col-md-6 col-lg-4">
+        <article class="card h-100 border-secondary" style="background-color: #111111;">
+          <img src="assets/img/catan.jpg" class="card-img-top img-fluid" alt="Juego Catan" style="border-bottom: 2px solid #1E90FF;">
+          <div class="card-body d-flex flex-column text-white">
+            <span class="badge bg-primary mb-2 text-start w-auto">Juegos de Mesa</span>
+            <h5 class="card-title text-neon">Catan</h5>
+            <p class="card-text text-muted">Clásico juego de estrategia para competir por colonizar la isla de Catan.</p>
+            <p class="fw-bold fs-5 mt-auto text-white">\$29.990 CLP</p>
+            <button class="btn btn-neon w-100" onclick="agregarAlCarrito('Juego Catan', 29990)">Agregar al Carrito</button>
+          </div>
+        </article>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer con Botón de WhatsApp -->
+  <footer class="text-center py-4 mt-auto" style="background-color: #000000; border-top: 1px solid #333;">
+    <div class="container">
+      <p class="mb-1">Equipo de Desarrollo Fullstack II - 2026</p>
+      <p class="text-muted small">Apoyando a la comunidad gamer nacional.</p>
+      <a href="https://wa.me/56912345678" target="_blank" class="btn btn-outline-success rounded-pill mt-2" style="border-color: #39FF14; color: #39FF14;">
+        📱 Chat de Soporte Técnico (WhatsApp)
+      </a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="carrito.js"></script>
 </body>
 </html>
