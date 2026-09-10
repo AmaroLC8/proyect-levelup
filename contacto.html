@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto - Level-Up Gamer</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+   
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="bg-black text-white">
+
+    <header>
+        
+        <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #1E90FF;">
+            <div class="container">
+                <a class="navbar-brand text-white fw-bold" href="index.html" style="font-family: 'Orbitron', sans-serif;">LEVEL-UP GAMER</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link text-white" href="index.html">Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link text-white" href="catalogo.html">Catálogo</a></li>
+                        <li class="nav-item"><a class="nav-link text-white" href="index.html">Registro</a></li>
+                        <li class="nav-item"><a class="nav-link text-white fw-bold" href="contacto.html">Contacto</a></li>
+                        <li class="nav-item"><a class="nav-link text-white" href="carrito.html">Carrito</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container my-5">
+        <section class="row justify-content-center">
+            <article class="col-md-8 col-lg-6 p-4 rounded border border-secondary form-container" style="background-color: #111;">
+                <h2 class="text-center text-neon mb-4">¿Necesitas Ayuda?</h2>
+                <p class="text-center text-muted mb-4">Escríbenos y nuestro soporte técnico se contactará contigo a la brevedad.</p>
+                
+               
+                <form id="contactoForm">
+                    <div class="mb-3">
+                        <label for="nombreContacto" class="form-label">Nombre:</label>
+                        <input type="text" class="form-control" id="nombreContacto" placeholder="Tu nombre">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="emailContacto" class="form-label">Correo Electrónico:</label>
+                        <input type="email" class="form-control" id="emailContacto" placeholder="ejemplo@correo.com">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="asunto" class="form-label">Asunto:</label>
+                        <select class="form-select form-control" id="asunto">
+                            <option selected>Selecciona un asunto...</option>
+                            <option value="1">Soporte Técnico</option>
+                            <option value="2">Consulta sobre un producto</option>
+                            <option value="3">Problema con el carrito de compras</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="mensajeContacto" class="form-label">Mensaje:</label>
+                        <textarea class="form-control" id="mensajeContacto" rows="4" placeholder="Escribe tu mensaje aquí..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-neon w-100 py-2">Enviar Mensaje</button>
+                </form>
+            </article>
+        </section>
+    </main>
+
+    
+    <footer class="text-center py-4 mt-auto" style="background-color: #000000; border-top: 1px solid #333;">
+        <div class="container">
+            <p class="mb-1">Equipo de Desarrollo Fullstack II - 2024</p>
+            <p class="text-muted small">Apoyando a la comunidad gamer nacional.</p>
+            <a href="https://wa.me/56912345678" target="_blank" class="btn btn-outline-success rounded-pill mt-2" style="border-color: #39FF14; color: #39FF14;">Chat de Soporte Técnico</a>
+        </div>
+    </footer>
+
+  
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
