@@ -32,7 +32,13 @@
   </header>
 
   <main class="container my-5">
-    <div class="row g-5 align-items-center">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="catalogo.html" class="text-info">Catálogo</a></li>
+        <li class="breadcrumb-item active text-muted" aria-current="page">PlayStation 5</li>
+      </ol>
+    </nav>
+    <section class="row g-5 align-items-center">
       <div class="col-md-6">
         <img src="assets/img/ps5.jpg" class="img-fluid rounded border border-secondary" alt="PlayStation 5" style="border-bottom: 3px solid #1E90FF !important;">
       </div>
@@ -52,14 +58,16 @@
         <button class="btn btn-neon btn-lg px-4" onclick="agregarAlCarrito('PlayStation 5', 549990)">
           🛒 Añadir al Carrito
         </button>
+        <a href="catalogo.html" class="btn btn-outline-light btn-lg px-4 ms-2">Volver al Catálogo</a>
       </div>
-    </div>
+    </section>
   </main>
 
   <footer class="text-center py-4 mt-auto" style="background-color: #000000; border-top: 1px solid #333;">
     <div class="container">
       <p class="mb-1">Equipo de Desarrollo Fullstack II - 2026</p>
-      <a href="https://wa.me/56912345678" target="_blank" class="btn btn-outline-success rounded-pill mt-2" style="border-color: #39FF14; color: #39FF14;">Chat de Soporte Técnico</a>
+      <p class="text-muted small">Apoyando a la comunidad gamer nacional.</p>
+      <a href="https://wa.me/56912345678" target="_blank" class="btn btn-outline-success rounded-pill mt-2" style="border-color: #39FF14; color: #39FF14;">📱 Chat de Soporte Técnico (WhatsApp)</a>
     </div>
   </footer>
 

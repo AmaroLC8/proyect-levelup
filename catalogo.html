@@ -11,13 +11,14 @@
     
     <link rel="stylesheet" href="assets/style.css">
 </head>
-<body class="bg-black text-white">
+<body class="bg-black text-white d-flex flex-column min-vh-100">
 
     <header>
-        
         <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #1E90FF;">
             <div class="container">
-                <a class="navbar-brand text-white fw-bold" href="index.html" style="font-family: 'Orbitron', sans-serif;">LEVEL-UP GAMER</a>
+                <a class="navbar-brand text-white fw-bold" href="index.html" style="font-family: 'Orbitron', sans-serif;">
+                    LEVEL-UP <span style="color: #39FF14;">GAMER</span>
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -25,9 +26,10 @@
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link text-white" href="index.html">Inicio</a></li>
                         <li class="nav-item"><a class="nav-link text-white fw-bold" href="catalogo.html">Catálogo</a></li>
-                        <li class="nav-item"><a class="nav-link text-white" href="index.html">Registro</a></li>
                         <li class="nav-item"><a class="nav-link text-white" href="contacto.html">Contacto</a></li>
-                        <li class="nav-item"><a class="nav-link text-white" href="carrito.html">Carrito</a></li>
+                        <li class="nav-item"><a class="nav-link text-white" href="registro.html">Registro</a></li>
+                        <li class="nav-item"><a class="nav-link text-white" href="login.html">Iniciar Sesión</a></li>
+                        <li class="nav-item"><a class="nav-link text-white" href="carrito.html">🛒 Carrito</a></li>
                     </ul>
                 </div>
             </div>
@@ -36,10 +38,9 @@
 
     <main class="container my-5">
         <h2 class="text-center text-neon mb-5">Catálogo de Productos</h2>
-        
-        <div class="row g-4">
-            
-            
+
+        <section class="row g-4">
+
             <div class="col-12 col-md-6 col-lg-4">
                 <article class="card h-100 border-secondary" style="background-color: #222222;">
                     
@@ -48,6 +49,7 @@
                         <h5 class="card-title text-neon">PlayStation 5</h5>
                         <p class="card-text text-muted">Consola de última generación de Sony, gráficos impresionantes y tiempos de carga ultrarrápidos.</p>
                         <p class="fw-bold fs-5 mt-auto">$549.990 CLP</p>
+                        <a href="producto-detalle.html" class="btn btn-outline-light w-100 mb-2">Ver Detalle</a>
                         <button class="btn btn-neon w-100" onclick="agregarAlCarrito('PlayStation 5', 549990)">Agregar al Carrito</button>
                     </div>
                 </article>
@@ -77,14 +79,14 @@
                 </article>
             </div>
 
-        </div>
+        </section>
     </main>
 
     <footer class="text-center py-4 mt-auto" style="background-color: #000000; border-top: 1px solid #333;">
         <div class="container">
-            <p class="mb-1">Equipo de Desarrollo Fullstack II - 2024</p>
+            <p class="mb-1">Equipo de Desarrollo Fullstack II - 2026</p>
             <p class="text-muted small">Apoyando a la comunidad gamer nacional.</p>
-            <a href="https://wa.me/56912345678" target="_blank" class="btn btn-outline-success rounded-pill mt-2" style="border-color: #39FF14; color: #39FF14;">Chat de Soporte Técnico</a>
+            <a href="https://wa.me/56912345678" target="_blank" class="btn btn-outline-success rounded-pill mt-2" style="border-color: #39FF14; color: #39FF14;">📱 Chat de Soporte Técnico (WhatsApp)</a>
         </div>
     </footer>
 
