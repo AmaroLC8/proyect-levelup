@@ -30,9 +30,22 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      // 3. Validar Dominios Permitidos (@duoc.cl, @profesor.duoc.cl, @gmail.com)
+      // 3. Validar que tenga exactamente UN solo '@'
+      const cantidadArrobas = (email.match(/@/g) || []).length;
+      if (cantidadArrobas !== 1) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Correo Inválido',
+          text: 'El correo electrónico debe contener exactamente un solo símbolo "@".',
+          background: '#111', color: '#fff', confirmButtonColor: '#1E90FF'
+        });
+        return;
+      }
+
+      // 4. Validar Dominios Permitidos (@duoc.cl, @duocuc.cl, @profesor.duoc.cl, @gmail.com)
       const emailLower = email.toLowerCase();
       const dominioValido = emailLower.endsWith('@duoc.cl') || 
+                            emailLower.endsWith('@duocuc.cl') ||
                             emailLower.endsWith('@profesor.duoc.cl') || 
                             emailLower.endsWith('@gmail.com');
 
@@ -46,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      // 4. Validar Contraseña Requerida
+      // 5. Validar Contraseña Requerida
       if (password === '') {
         Swal.fire({
           icon: 'error',
@@ -57,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      // 5. Validar Largo de Contraseña (Entre 4 y 10 caracteres)
+      // 6. Validar Largo de Contraseña (Entre 4 y 10 caracteres)
       if (password.length < 4 || password.length > 10) {
         Swal.fire({
           icon: 'error',
@@ -68,8 +81,33 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      // 6. Redirección según el Rol de Usuario (Administrador vs Cliente)
-      if (emailLower === 'admin@duoc.cl' || emailLower === 'admin@profesor.duoc.cl') {
+      // 7. VERIFICACIÓN DE CUENTA EXISTENTE EN LOCALSTORAGE
+      // Lista de administradores base por defecto
+      const administradoresBase = ['admin@duoc.cl', 'admin@profesor.duoc.cl'];
+      
+      // Obtener usuarios registrados desde localStorage
+      const usuariosRegistrados = JSON.parse(localStorage.getItem('usuariosAdmin')) || [];
+
+      // Buscar si el correo ingresado existe en la base de datos local
+      const usuarioEncontrado = usuariosRegistrados.find(
+        usr => usr.email && usr.email.toLowerCase() === emailLower
+      );
+
+      const esAdmin = administradoresBase.includes(emailLower);
+
+      // Si no es un admin por defecto Y tampoco existe en la lista de registrados
+      if (!esAdmin && !usuarioEncontrado) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Cuenta no encontrada',
+          text: 'No existe ninguna cuenta registrada con este correo electrónico. Por favor, crea una en la sección de Registro.',
+          background: '#111', color: '#fff', confirmButtonColor: '#1E90FF'
+        });
+        return;
+      }
+
+      // 8. REDIRECCIÓN SEGÚN ROL
+      if (esAdmin || (usuarioEncontrado && usuarioEncontrado.tipo === 'Administrador')) {
         Swal.fire({
           icon: 'success',
           title: '¡Sesión de Administrador!',
@@ -82,7 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
         Swal.fire({
           icon: 'success',
           title: '¡Sesión Iniciada!',
-          text: `Bienvenido de nuevo, ${email}`,
+          text: `Bienvenido de nuevo, ${usuarioEncontrado ? usuarioEncontrado.nombre : email}`,
           background: '#111', color: '#39FF14', confirmButtonColor: '#1E90FF'
         }).then(() => {
           window.location.href = 'index.html';

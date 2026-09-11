@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const comuna = document.getElementById('comunaSelect').value;
       const direccion = document.getElementById('direccion').value.trim();
 
-      // 1. Validar RUN Estricto (7 a 9 caracteres, sin puntos ni guion, solo números y termina en número o K/k)
+      // 1. Validar RUN Estricto (7 a 9 caracteres, sin puntos ni guion, solo números y K/k)
       const runRegex = /^\d{6,8}[0-9kK]$/;
       if (!runRegex.test(run)) {
         Swal.fire({
@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      // 3. Validar Correo Electrónico (Solo @duoc.cl, @profesor.duoc.cl o @gmail.com)
+      // 3. Validar Correo Electrónico
       if (email === '' || email.length > 100) {
         Swal.fire({
           icon: 'error',
@@ -114,6 +114,21 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
+      // 4. Validar que tenga exactamente UN solo '@'
+      const cantidadArrobas = (email.match(/@/g) || []).length;
+      if (cantidadArrobas !== 1) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Correo Inválido',
+          text: 'El correo electrónico debe contener exactamente un solo símbolo "@".',
+          background: '#111',
+          color: '#fff',
+          confirmButtonColor: '#1E90FF'
+        });
+        return;
+      }
+
+      // 5. Validar Dominios Permitidos (@duoc.cl, @duocuc.cl, @profesor.duoc.cl, @gmail.com)
       const emailLower = email.toLowerCase();
       const correoValido = emailLower.endsWith('@duoc.cl') || 
                            emailLower.endsWith('@duocuc.cl') ||
@@ -131,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      // 4. Validar Mayoría de Edad (+18 años)
+      // 6. Validar Mayoría de Edad (+18 años)
       if (!fechaNacimiento) {
         Swal.fire({
           icon: 'error',
@@ -164,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      // 5. Validar Región y Comuna
+      // 7. Validar Región y Comuna
       if (region === "" || comuna === "") {
         Swal.fire({
           icon: 'error',
@@ -177,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      // 6. Validar Dirección
+      // 8. Validar Dirección
       if (direccion === '' || direccion.length > 300) {
         Swal.fire({
           icon: 'error',
@@ -190,8 +205,31 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      // Mensaje de éxito con beneficios de negocio
-      let mensajeExito = `¡Bienvenido(a) ${nombre} ${apellidos}! Tu cuenta ha sido creada exitosamente.`;
+      // 9. GUARDAR USUARIO EN LOCALSTORAGE PARA PERMITIR LOGIN POSTERIOR
+      let usuariosActuales = JSON.parse(localStorage.getItem('usuariosAdmin')) || [
+        { run: '19011022K', nombre: 'Gonzalo', apellidos: 'Pérez', email: 'admin@duoc.cl', tipo: 'Administrador', comuna: 'Santiago' }
+      ];
+
+      // Verificar si el correo ya estaba registrado previamente
+      const correoExiste = usuariosActuales.some(usr => usr.email.toLowerCase() === emailLower);
+      if (correoExiste) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Usuario Ya Registrado',
+          text: 'Este correo electrónico ya tiene una cuenta activa. Intenta iniciar sesión.',
+          background: '#111',
+          color: '#fff',
+          confirmButtonColor: '#1E90FF'
+        });
+        return;
+      }
+
+      const comunaNombre = comunaSelect.options[comunaSelect.selectedIndex] ? comunaSelect.options[comunaSelect.selectedIndex].text : 'Sin especificar';
+      usuariosActuales.push({ run, nombre, apellidos, email: emailLower, tipo: 'Cliente', comuna: comunaNombre });
+      localStorage.setItem('usuariosAdmin', JSON.stringify(usuariosActuales));
+
+      // Mensaje de éxito
+      let mensajeExito = `¡Bienvenido(a) ${nombre} ${apellidos}! Tu cuenta ha sido creada exitosamente. Ya puedes iniciar sesión.`;
       if (emailLower.includes('@duoc.cl') || emailLower.includes('@duocuc.cl') || emailLower.includes('@profesor.duoc.cl')) {
         mensajeExito += "\n🎉 ¡Felicidades! Se ha aplicado tu descuento del 20% de por vida por ser alumno/docente Duoc UC.";
       }
