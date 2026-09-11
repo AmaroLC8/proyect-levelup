@@ -4,14 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Level-Up Gamer - Tienda Online</title>
+  <!-- Bootstrap 5 CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Fuentes de Google: Orbitron y Roboto -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/style.css">
 </head>
 <body class="bg-black text-white d-flex flex-column min-vh-100">
 
+  <!-- Encabezado y Navegación -->
   <header>
-
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #1E90FF;">
       <div class="container">
         <a class="navbar-brand text-white fw-bold" href="index.html" style="font-family: 'Orbitron', sans-serif;">
@@ -21,28 +23,25 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
+          <!-- Menú Principal de la Tienda -->
           <ul class="navbar-nav me-auto">
             <li class="nav-item"><a class="nav-link text-white fw-bold" href="index.html">Inicio</a></li>
             <li class="nav-item"><a class="nav-link text-white" href="catalogo.html">Catálogo</a></li>
             <li class="nav-item"><a class="nav-link text-white" href="contacto.html">Contacto</a></li>
             <li class="nav-item"><a class="nav-link text-white" href="carrito.html">🛒 Carrito</a></li>
           </ul>
-          <!-- Contenedor dinámico de sesión -->
-          <ul class="navbar-nav ms-auto" id="navbarSesion"></ul>
+          
+          <!-- Opciones de Sesión (Visibles por defecto en el HTML) -->
+          <ul class="navbar-nav ms-auto" id="navbarSesion">
+            <li class="nav-item"><a class="nav-link text-white" href="registro.html">Registro</a></li>
+            <li class="nav-item"><a class="nav-link text-white fw-bold" href="login.html">Iniciar Sesión</a></li>
+          </ul>
         </div>
       </div>
     </nav>
-        <section class="seccion-video">
-      <div class="contenedor-video">
-        <video autoplay loop muted playsinline class="video-promocional">
-          <!-- Asegúrate de poner el nombre de tu video -->
-          <source src="./assets/video/ps5.mp4" type="video/mp4">
-          Tu navegador no soporta la reproducción de video.
-        </video>
-      </div>
-    </section>
   </header>
 
+  <!-- Banner Hero -->
   <section class="hero-section text-center py-5 border-bottom border-secondary" style="background: linear-gradient(180deg, #111111 0%, #000000 100%);">
     <div class="container my-4">
       <h1 class="display-4 fw-extrabold text-neon mb-3">¡Desafía tus límites con Level-Up Gamer!</h1>
@@ -54,6 +53,7 @@
     </div>
   </section>
 
+  <!-- Productos Destacados -->
   <main class="container my-5">
     <h2 class="text-center text-neon mb-4">Productos Destacados</h2>
     <div class="row g-4">
