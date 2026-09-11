@@ -8,29 +8,18 @@ document.addEventListener('DOMContentLoaded', () => {
       const email = document.getElementById('loginEmail').value.trim();
       const password = document.getElementById('loginPassword').value.trim();
 
-      // 1. Validar Correo Requerido
-      if (email === '') {
+      // 1. Validar Correo y Contraseña ingresados
+      if (email === '' || password === '') {
         Swal.fire({
           icon: 'error',
-          title: 'Campo Requerido',
-          text: 'Por favor, ingresa tu correo electrónico.',
+          title: 'Campos Requeridos',
+          text: 'Por favor, ingresa tu correo y contraseña.',
           background: '#111', color: '#fff', confirmButtonColor: '#1E90FF'
         });
         return;
       }
 
-      // 2. Validar Largo de Correo (Max 100)
-      if (email.length > 100) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Correo demasiado largo',
-          text: 'El correo electrónico no puede superar los 100 caracteres.',
-          background: '#111', color: '#fff', confirmButtonColor: '#1E90FF'
-        });
-        return;
-      }
-
-      // 3. Validar que tenga exactamente UN solo '@'
+      // 2. Validar que exista exactamente un solo '@'
       const cantidadArrobas = (email.match(/@/g) || []).length;
       if (cantidadArrobas !== 1) {
         Swal.fire({
@@ -42,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      // 4. Validar Dominios Permitidos (@duoc.cl, @duocuc.cl, @profesor.duoc.cl, @gmail.com)
+      // 3. Validar Dominios Permitidos
       const emailLower = email.toLowerCase();
       const dominioValido = emailLower.endsWith('@duoc.cl') || 
                             emailLower.endsWith('@duocuc.cl') ||
@@ -59,59 +48,53 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      // 5. Validar Contraseña Requerida
-      if (password === '') {
-        Swal.fire({
-          icon: 'error',
-          title: 'Campo Requerido',
-          text: 'Por favor, ingresa tu contraseña.',
-          background: '#111', color: '#fff', confirmButtonColor: '#1E90FF'
-        });
-        return;
-      }
+      // 4. BUSCAR EN LOCALSTORAGE Y REVISAR CONTRASEÑA
+      const usuariosRegistrados = JSON.parse(localStorage.getItem('usuariosAdmin')) || [
+        { run: '19011022K', nombre: 'Gonzalo', apellidos: 'Pérez', email: 'admin@duoc.cl', password: 'admin', tipo: 'Administrador', comuna: 'Santiago' }
+      ];
 
-      // 6. Validar Largo de Contraseña (Entre 4 y 10 caracteres)
-      if (password.length < 4 || password.length > 10) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Contraseña Inválida',
-          text: 'La contraseña debe tener entre 4 y 10 caracteres.',
-          background: '#111', color: '#fff', confirmButtonColor: '#1E90FF'
-        });
-        return;
-      }
-
-      // 7. VERIFICACIÓN DE CUENTA EXISTENTE EN LOCALSTORAGE
-      // Lista de administradores base por defecto
-      const administradoresBase = ['admin@duoc.cl', 'admin@profesor.duoc.cl'];
-      
-      // Obtener usuarios registrados desde localStorage
-      const usuariosRegistrados = JSON.parse(localStorage.getItem('usuariosAdmin')) || [];
-
-      // Buscar si el correo ingresado existe en la base de datos local
       const usuarioEncontrado = usuariosRegistrados.find(
         usr => usr.email && usr.email.toLowerCase() === emailLower
       );
 
-      const esAdmin = administradoresBase.includes(emailLower);
+      const esAdminPorDefecto = (emailLower === 'admin@duoc.cl' || emailLower === 'admin@profesor.duoc.cl');
 
-      // Si no es un admin por defecto Y tampoco existe en la lista de registrados
-      if (!esAdmin && !usuarioEncontrado) {
+      // Si el correo no está registrado
+      if (!usuarioEncontrado && !esAdminPorDefecto) {
         Swal.fire({
           icon: 'error',
-          title: 'Cuenta no encontrada',
-          text: 'No existe ninguna cuenta registrada con este correo electrónico. Por favor, crea una en la sección de Registro.',
+          title: 'Cuenta No Encontrada',
+          text: 'No existe ninguna cuenta registrada con este correo electrónico. Por favor, regístrate primero.',
           background: '#111', color: '#fff', confirmButtonColor: '#1E90FF'
         });
         return;
       }
 
-      // 8. REDIRECCIÓN SEGÚN ROL
-      if (esAdmin || (usuarioEncontrado && usuarioEncontrado.tipo === 'Administrador')) {
+      // Verificar contraseña
+      if (usuarioEncontrado && usuarioEncontrado.password && usuarioEncontrado.password !== password) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Contraseña Incorrecta',
+          text: 'La contraseña ingresada no coincide con nuestros registros.',
+          background: '#111', color: '#fff', confirmButtonColor: '#1E90FF'
+        });
+        return;
+      }
+
+      // 5. GUARDAR SESIÓN Y REDIRIGIR
+      const usuarioSesion = usuarioEncontrado || {
+        nombre: 'Administrador',
+        email: emailLower,
+        tipo: 'Administrador'
+      };
+
+      localStorage.setItem('usuarioLogueado', JSON.stringify(usuarioSesion));
+
+      if (esAdminPorDefecto || usuarioSesion.tipo === 'Administrador') {
         Swal.fire({
           icon: 'success',
           title: '¡Sesión de Administrador!',
-          text: 'Bienvenido al sistema de gestión.',
+          text: 'Bienvenido al panel de administración.',
           background: '#111', color: '#39FF14', confirmButtonColor: '#1E90FF'
         }).then(() => {
           window.location.href = 'admin/index.html';
@@ -119,8 +102,8 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         Swal.fire({
           icon: 'success',
-          title: '¡Sesión Iniciada!',
-          text: `Bienvenido de nuevo, ${usuarioEncontrado ? usuarioEncontrado.nombre : email}`,
+          title: '¡Bienvenido(a)!',
+          text: `Hola ${usuarioSesion.nombre}, has iniciado sesión correctamente.`,
           background: '#111', color: '#39FF14', confirmButtonColor: '#1E90FF'
         }).then(() => {
           window.location.href = 'index.html';
