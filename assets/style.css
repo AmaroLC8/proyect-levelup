@@ -66,3 +66,27 @@ small.text-muted,
 small {
   color: #D3D3D3 !important; /* Gris Claro visible y legible */
 }
+
+/* Contenedor principal para dar espacio arriba y abajo */
+.seccion-video {
+  padding: 40px 20px; 
+  display: flex;
+  justify-content: center; 
+  background-color: #121212; 
+}
+
+/* Caja que limita el tamaño máximo del video */
+.contenedor-video {
+  width: 100%;
+  max-width: 1000px; 
+}
+
+/* Estilo del video para que se vea moderno */
+.video-promocional {
+  width: 100%;
+  height: auto;
+  max-height: 450px; 
+  object-fit: cover;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(100, 100, 255, 0.2); 
+}
