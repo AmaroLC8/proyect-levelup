@@ -9,6 +9,7 @@ function actualizarBarraSesion() {
   const usuarioLogueado = JSON.parse(localStorage.getItem('usuarioLogueado'));
 
   if (usuarioLogueado) {
+
     container.innerHTML = `
       <li class="nav-item d-flex align-items-center me-2">
         <span class="text-neon fw-bold" style="font-size: 0.95rem;">👤 Hola, ${usuarioLogueado.nombre}</span>
