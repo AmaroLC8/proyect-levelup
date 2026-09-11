@@ -13,11 +13,43 @@ const regionesYComunasAdmin = [
   }
 ];
 
+function validarRutChileno(rut) {
+  rut = rut.trim().toUpperCase();
+  const regex = /^\d{6,8}[0-9K]$/;
+  if (!regex.test(rut)) return false;
+
+  const cuerpo = rut.slice(0, -1);
+  const dvIngresado = rut.slice(-1);
+
+  let suma = 0;
+  let multiplicador = 2;
+
+  for (let i = cuerpo.length - 1; i >= 0; i--) {
+    suma += parseInt(cuerpo.charAt(i)) * multiplicador;
+    multiplicador = multiplicador === 7 ? 2 : multiplicador + 1;
+  }
+
+  const resto = suma % 11;
+  let dvEsperado = 11 - resto;
+
+  if (dvEsperado === 11) dvEsperado = '0';
+  else if (dvEsperado === 10) dvEsperado = 'K';
+  else dvEsperado = dvEsperado.toString();
+
+  return dvIngresado === dvEsperado;
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-  let usuarios = [
-    { run: '19011022K', nombre: 'Gonzalo', apellidos: 'Pérez', email: 'admin@duoc.cl', tipo: 'Administrador', comuna: 'Santiago' },
-    { run: '184445551', nombre: 'María', apellidos: 'López', email: 'maria@gmail.com', tipo: 'Cliente', comuna: 'Providencia' }
+  const usuariosBase = [
+    { run: '19011022K', nombre: 'Gonzalo', apellidos: 'Pérez', email: 'admin@duoc.cl', tipo: 'Administrador', comuna: 'Santiago' }
   ];
+
+  let usuarios = JSON.parse(localStorage.getItem('usuariosAdmin')) || usuariosBase;
+
+  function guardarYRenderizar() {
+    localStorage.setItem('usuariosAdmin', JSON.stringify(usuarios));
+    renderizarTabla();
+  }
 
   const regionSelect = document.getElementById('usrRegion');
   const comunaSelect = document.getElementById('usrComuna');
@@ -61,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <td><span class="badge bg-info text-dark">${u.tipo}</span></td>
           <td>${u.comuna}</td>
           <td>
-            <button class="btn btn-sm btn-danger" onclick="eliminarUsuario(${index})">Eliminar</button>
+            <button class="btn btn-sm btn-danger" onclick="eliminarUsuario(${index})">❌ Eliminar</button>
           </td>
         </tr>
       `;
@@ -70,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.eliminarUsuario = function(index) {
     usuarios.splice(index, 1);
-    renderizarTabla();
+    guardarYRenderizar();
   };
 
   const usrForm = document.getElementById('usuarioForm');
@@ -86,46 +118,39 @@ document.addEventListener('DOMContentLoaded', () => {
       const comuna = document.getElementById('usrComuna').value;
       const direccion = document.getElementById('usrDireccion').value.trim();
 
-      // 1. Validar RUN Estricto (7 a 9 caracteres, sin puntos ni guion, solo números y termina en número o K/k)
-      const runRegex = /^\d{6,8}[0-9kK]$/;
-      if (!runRegex.test(run)) {
+      // 1. Validar RUN Chileno
+      if (!validarRutChileno(run)) {
         Swal.fire({
-          icon: 'error',
-          title: 'RUN Inválido',
-          text: 'El RUN debe tener entre 7 y 9 caracteres, sin puntos ni guion, y solo puede contener números o terminar en la letra K (Ej: 19011022K).',
-          background: '#111',
-          color: '#fff',
-          confirmButtonColor: '#1E90FF'
+          icon: 'error', title: 'RUN Inválido',
+          text: 'El RUN es incorrecto o no cumple el algoritmo Módulo 11 (Ej: 19011022K).',
+          background: '#111', color: '#fff', confirmButtonColor: '#1E90FF'
         });
         return;
       }
 
-      // 2. Validar Nombre (Max 50) y Apellidos (Max 100)
-      if (nombre === '' || nombre.length > 50) {
+      // 2. Validar que Nombre y Apellidos solo contengan letras
+      const regexLetras = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;
+      if (!regexLetras.test(nombre) || nombre.length > 50 || !regexLetras.test(apellidos) || apellidos.length > 100) {
         Swal.fire({
-          icon: 'error',
-          title: 'Nombre Inválido',
-          text: 'El nombre es obligatorio y no puede superar los 50 caracteres.',
-          background: '#111',
-          color: '#fff',
-          confirmButtonColor: '#1E90FF'
+          icon: 'error', title: 'Nombre o Apellidos Inválidos',
+          text: 'Nombre y Apellidos solo pueden contener letras (sin números ni símbolos).',
+          background: '#111', color: '#fff', confirmButtonColor: '#1E90FF'
         });
         return;
       }
 
-      if (apellidos === '' || apellidos.length > 100) {
+      // 3. Validar exacto un solo '@'
+      const cantidadArrobas = (email.match(/@/g) || []).length;
+      if (cantidadArrobas !== 1) {
         Swal.fire({
-          icon: 'error',
-          title: 'Apellidos Inválidos',
-          text: 'Los apellidos son obligatorios y no pueden superar los 100 caracteres.',
-          background: '#111',
-          color: '#fff',
-          confirmButtonColor: '#1E90FF'
+          icon: 'error', title: 'Correo Inválido',
+          text: 'El correo electrónico debe contener exactamente un solo símbolo "@".',
+          background: '#111', color: '#fff', confirmButtonColor: '#1E90FF'
         });
         return;
       }
 
-      // 3. Validar Correo Electrónico (Dominios permitidos: @duoc.cl, @profesor.duoc.cl, @gmail.com)
+      // 4. Validar Correo y Dominios
       const emailLower = email.toLowerCase();
       const correoValido = emailLower.endsWith('@duoc.cl') || 
                            emailLower.endsWith('@duocuc.cl') ||
@@ -134,67 +159,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (!correoValido || email.length > 100) {
         Swal.fire({
-          icon: 'error',
-          title: 'Correo No Permitido',
-          text: 'Solo se permiten correos con dominio @duoc.cl, @profesor.duoc.cl o @gmail.com (máximo 100 caracteres).',
-          background: '#111',
-          color: '#fff',
-          confirmButtonColor: '#1E90FF'
+          icon: 'error', title: 'Correo No Permitido',
+          text: 'Solo se permiten correos con dominios @duoc.cl, @profesor.duoc.cl o @gmail.com.',
+          background: '#111', color: '#fff', confirmButtonColor: '#1E90FF'
         });
         return;
       }
 
-      // 4. Validar Rol (Exclusivo vista admin: Administrador, Cliente, Vendedor)
-      if (tipo === '') {
+      if (tipo === '' || comuna === '' || direccion === '' || direccion.length > 300) {
         Swal.fire({
-          icon: 'error',
-          title: 'Rol Requerido',
-          text: 'Debes seleccionar un Tipo de Usuario (Administrador, Cliente o Vendedor).',
-          background: '#111',
-          color: '#fff',
-          confirmButtonColor: '#1E90FF'
+          icon: 'error', title: 'Campos Incompletos',
+          text: 'Por favor, completa el Rol, Comuna y Dirección.',
+          background: '#111', color: '#fff', confirmButtonColor: '#1E90FF'
         });
         return;
       }
 
-      // 5. Validar Comuna
-      if (comuna === '') {
-        Swal.fire({
-          icon: 'error',
-          title: 'Comuna Requerida',
-          text: 'Debes seleccionar una comuna.',
-          background: '#111',
-          color: '#fff',
-          confirmButtonColor: '#1E90FF'
-        });
-        return;
-      }
-
-      // 6. Validar Dirección (Max 300)
-      if (direccion === '' || direccion.length > 300) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Dirección Inválida',
-          text: 'La dirección es obligatoria y no puede exceder los 300 caracteres.',
-          background: '#111',
-          color: '#fff',
-          confirmButtonColor: '#1E90FF'
-        });
-        return;
-      }
-
-      usuarios.push({ run, nombre, apellidos, email, tipo, comuna });
+      usuarios.push({ run, nombre, apellidos, email: emailLower, tipo, comuna });
+      guardarYRenderizar();
 
       Swal.fire({
-        icon: 'success',
-        title: '¡Usuario Creado!',
+        icon: 'success', title: '¡Usuario Creado!',
         text: `El usuario ${nombre} ${apellidos} fue registrado con el rol de ${tipo}.`,
-        background: '#111',
-        color: '#39FF14',
-        confirmButtonColor: '#1E90FF'
+        background: '#111', color: '#39FF14', confirmButtonColor: '#1E90FF'
       });
 
-      renderizarTabla();
       this.reset();
       comunaSelect.disabled = true;
     });
